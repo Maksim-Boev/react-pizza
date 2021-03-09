@@ -1,0 +1,6 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="$style$" level="WARNING" enabled_by_default="$style$" />
+  </profile>
+</component>
