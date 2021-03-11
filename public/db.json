@@ -84,7 +84,7 @@
       "id": 8,
       "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/ec29465e-606b-4a04-a03e-da3940d37e0e.jpg",
       "name": "Четыре сезона",
-      "types": [0, 1],
+      "types": [1],
       "sizes": [26, 30, 40],
       "price": 395,
       "category": 5,
@@ -99,6 +99,26 @@
       "price": 285,
       "category": 5,
       "rating": 7
+    },
+    {
+      "id": 10,
+      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/26fa2948b6c74113afb9d09a3262fc26_292x292.jpeg",
+      "name": "Ветчина и грибы",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 345,
+      "category": 1,
+      "rating": 7
+    },
+    {
+      "id": 11,
+      "imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/dc5dc4e9-932a-4abf-9472-dfb6326ea9ee.jpg",
+      "name": "Мексиканская",
+      "types": [0, 1],
+      "sizes": [26, 30, 40],
+      "price": 445,
+      "category": 4,
+      "rating": 10
     }
   ]
 }
