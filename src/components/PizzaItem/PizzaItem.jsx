@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const PizzaItem = ({ data }) => {
   const [pizzaSize, setActiveSize] = useState(0);
-  const [doughType, setDoughType] = useState(0);
+  const [doughType, setDoughType] = useState(data.types[0]);
   const type = ['тонкое', 'традиционное'];
 
   return (
@@ -20,8 +20,7 @@ const PizzaItem = ({ data }) => {
                   setDoughType(index);
                 }}
                 className={
-                  (data.types.length > 1 && doughType === index ? 'active' : '') +
-                  (data.types.length === 1 && index === data.types[0] ? 'active' : '') +
+                  (doughType === index ? 'active' : '') +
                   (!data.types.includes(index) ? 'disabled' : '')
                 }
               >
