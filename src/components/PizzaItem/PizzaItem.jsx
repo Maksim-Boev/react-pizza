@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 const PizzaItem = ({ data }) => {
-  const [pizzaSize, setActiveSize] = useState(0);
+  const [pizzaSize, setActiveSize] = useState(data.sizes[0]);
   const [doughType, setDoughType] = useState(data.types[0]);
-  const type = ['тонкое', 'традиционное'];
+  const availableType = ['тонкое', 'традиционное'];
+  const availableSizes = [26, 30, 40];
 
   return (
     <div className="pizza-block">
@@ -11,7 +12,7 @@ const PizzaItem = ({ data }) => {
       <h4 className="pizza-block__title">{data.name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {type.map((itemType, index) => {
+          {availableType.map((itemType, index) => {
             return (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
@@ -30,21 +31,23 @@ const PizzaItem = ({ data }) => {
           })}
         </ul>
         <ul>
-          {!!data.sizes &&
-            data.sizes.map((size, index) => {
-              return (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-                <li
-                  key={index.toString()}
-                  onClick={() => {
-                    setActiveSize(index);
-                  }}
-                  className={pizzaSize === index ? 'active' : ''}
-                >
-                  {size} см.
-                </li>
-              );
-            })}
+          {availableSizes.map((size) => {
+            return (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+              <li
+                key={size.toString()}
+                onClick={() => {
+                  setActiveSize(size);
+                }}
+                className={
+                  (pizzaSize === size ? 'active' : '') +
+                  (!data.sizes.includes(size) ? 'disabled' : '')
+                }
+              >
+                {size} см.
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="pizza-block__bottom">
