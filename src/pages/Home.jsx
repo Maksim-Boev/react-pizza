@@ -7,7 +7,7 @@ const Home = ({ pizzas }) => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories onClickItem={(category) => console.log(category)} />
+        <Categories onClickItem={(category) => category} />
         <SortPopup />
       </div>
       <h2 className="content__title">Все пиццы</h2>

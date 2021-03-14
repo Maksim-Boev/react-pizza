@@ -5,7 +5,11 @@ const SortPopup = () => {
   const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
 
-  const popupItems = ['популярности', 'цене', 'алфавиту'];
+  const popupItems = [
+    { name: 'популярности', type: 'popular' },
+    { name: 'цене', type: 'price' },
+    { name: 'алфавиту', type: 'alphabet' },
+  ];
 
   useEffect(() => {
     document.body.addEventListener(
@@ -33,13 +37,13 @@ const SortPopup = () => {
         <b>Сортировка по:</b>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <span onClick={() => setVisiblePopup(!visiblePopup)}>
-          {popupItems[activeItem]}
+          {popupItems[activeItem].name}
         </span>
       </div>
       {visiblePopup && (
         <div className="sort__popup">
           <ul>
-            {popupItems.map((name, index) => (
+            {popupItems.map(({ name }, index) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
                 key={name}
