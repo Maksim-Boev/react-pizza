@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const PizzaItem = ({ data }) => {
-  const [pizzaSize, setActiveSize] = useState(data.sizes[0]);
-  const [doughType, setDoughType] = useState(data.types[0]);
+  const { sizes, types, imageUrl, price, name } = data;
+  const [pizzaSize, setActiveSize] = useState(sizes[0]);
+  const [doughType, setDoughType] = useState(types[0]);
   const availableType = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40];
-  console.log(data);
+
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={data.imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{data.name}</h4>
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
           {availableType.map((itemType, index) => {
@@ -23,7 +24,7 @@ const PizzaItem = ({ data }) => {
                 }}
                 className={
                   (doughType === index ? 'active' : '') +
-                  (!data.types.includes(index) ? 'disabled' : '')
+                  (!types.includes(index) ? 'disabled' : '')
                 }
               >
                 {itemType}
@@ -42,7 +43,7 @@ const PizzaItem = ({ data }) => {
                 }}
                 className={
                   (pizzaSize === size ? 'active' : '') +
-                  (!data.sizes.includes(size) ? 'disabled' : '')
+                  (!sizes.includes(size) ? 'disabled' : '')
                 }
               >
                 {size} см.
@@ -52,7 +53,7 @@ const PizzaItem = ({ data }) => {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {data.price} ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
@@ -76,12 +77,9 @@ const PizzaItem = ({ data }) => {
 
 PizzaItem.propTypes = {
   data: PropTypes.shape({
-    category: PropTypes.number,
-    id: PropTypes.number,
+    name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
-    name: PropTypes.string,
     price: PropTypes.number,
-    rating: PropTypes.number,
     sizes: PropTypes.arrayOf(PropTypes.number),
     types: PropTypes.arrayOf(PropTypes.number),
   }).isRequired,
