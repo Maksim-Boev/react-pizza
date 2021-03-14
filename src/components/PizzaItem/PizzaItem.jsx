@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const PizzaItem = ({ data }) => {
   const [pizzaSize, setActiveSize] = useState(data.sizes[0]);
   const [doughType, setDoughType] = useState(data.types[0]);
   const availableType = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40];
-
+  console.log(data);
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={data.imageUrl} alt="Pizza" />
@@ -71,6 +72,19 @@ const PizzaItem = ({ data }) => {
       </div>
     </div>
   );
+};
+
+PizzaItem.propTypes = {
+  data: PropTypes.shape({
+    category: PropTypes.number,
+    id: PropTypes.number,
+    imageUrl: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    rating: PropTypes.number,
+    sizes: PropTypes.arrayOf(PropTypes.number),
+    types: PropTypes.arrayOf(PropTypes.number),
+  }).isRequired,
 };
 
 export default PizzaItem;
