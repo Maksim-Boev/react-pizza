@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCategory } from '../../redux/actions/filters';
+
 import CategoriesItem from '../CategoriesItem';
 
-const Categories = ({ onClickItem }) => {
+const Categories = memo(() => {
   const [activeItem, setActiveItem] = useState(null);
   const listCategories = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onClickItem(activeItem);
+    dispatch(setCategory(activeItem));
   }, [activeItem]);
 
   return (
@@ -32,6 +36,6 @@ const Categories = ({ onClickItem }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

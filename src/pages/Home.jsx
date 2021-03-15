@@ -1,13 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import Categories from '../components/Categories';
 import SortPopup from '../components/SortPopup';
 import PizzaItem from '../components/PizzaItem';
 
-const Home = ({ pizzas }) => {
+const Home = () => {
+  const pizzas = useSelector((state) => state.pizzas.items);
+
   return (
     <div className="container">
       <div className="content__top">
-        <Categories onClickItem={(category) => category} />
+        <Categories />
         <SortPopup />
       </div>
       <h2 className="content__title">Все пиццы</h2>
