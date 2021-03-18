@@ -17,10 +17,12 @@ const SortPopup = memo(() => {
   ];
 
   useEffect(() => {
-    document.body.addEventListener(
-      'click',
-      (e) => !e.path.includes(sortRef.current) && setVisiblePopup(false)
-    );
+    document.body.addEventListener('click', (event) => {
+      const path = event.path || (event.composedPath && event.composedPath());
+      if (!path.includes(sortRef.current)) {
+        setVisiblePopup(false);
+      }
+    });
   }, [activeItem]);
 
   const onActiveItem = (index) => {
