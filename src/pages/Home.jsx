@@ -10,19 +10,20 @@ import Loader from '../components/Loader';
 const Home = () => {
   const pizzas = useSelector((state) => state.pizzas.items);
   const isLoaded = useSelector((state) => state.pizzas.isLoaded);
+  const { category, sortBy } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!pizzas.length) {
-      dispatch(fetchPizzas());
+    if (!isLoaded) {
+      dispatch(fetchPizzas(category, sortBy));
     }
-  }, []);
+  }, [isLoaded]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <SortPopup />
+        <Categories activeCategory={category} />
+        <SortPopup activeSort={sortBy} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -30,7 +31,7 @@ const Home = () => {
           ? pizzas.map((pizza, index) => (
               <PizzaItem key={index.toString()} data={pizza} />
             ))
-          : Array(12).fill(<Loader />)}
+          : Array.from({ length: 6 }, (v, k) => <Loader key={k.toString()} />)}
       </div>
     </div>
   );

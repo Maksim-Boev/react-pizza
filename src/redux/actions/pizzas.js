@@ -1,9 +1,22 @@
 import axios from 'axios';
 
+export const setLoaded = () => ({
+  type: 'SET_LOADED',
+});
+
 export const setPizzas = (items) => ({ type: 'SET_PIZZAS', payload: items });
 
-export const fetchPizzas = () => (dispatch) => {
-  axios.get('http://localhost:3004/pizzas').then(({ data }) => {
-    dispatch(setPizzas(data));
-  });
+export const fetchPizzas = (category, sort) => (dispatch) => {
+  axios
+    .get(
+      `http://localhost:3004/pizzas${category !== null ? `?category=${category}` : '?'}` +
+        `${
+          sort === 'rating'
+            ? '&_sort=rating&_order=asc'
+            : `&_sort=${sort.type}&_order=${sort.order}`
+        }`
+    )
+    .then(({ data }) => {
+      dispatch(setPizzas(data));
+    });
 };

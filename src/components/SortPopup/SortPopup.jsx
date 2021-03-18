@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSortBy } from '../../redux/actions/filters';
+import { setLoaded } from '../../redux/actions/pizzas';
 
 const SortPopup = memo(() => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
+  const dispatch = useDispatch();
 
   const popupItems = [
-    { name: 'популярности', type: 'popular' },
-    { name: 'цене', type: 'price' },
-    { name: 'алфавиту', type: 'alphabet' },
+    { name: 'популярности', type: 'rating', order: 'asc' },
+    { name: 'цене по возрастанию', type: 'price', order: 'asc' },
+    { name: 'цене по убыванию', type: 'price', order: 'desc' },
+    { name: 'алфавиту', type: 'name', order: 'asc' },
   ];
 
   useEffect(() => {
@@ -16,7 +21,14 @@ const SortPopup = memo(() => {
       'click',
       (e) => !e.path.includes(sortRef.current) && setVisiblePopup(false)
     );
-  }, []);
+  }, [activeItem]);
+
+  const onActiveItem = (index) => {
+    setActiveItem(index);
+    dispatch(setSortBy(popupItems[index]));
+    dispatch(setLoaded());
+    setVisiblePopup(false);
+  };
 
   return (
     <div ref={sortRef} className="sort">
@@ -47,18 +59,12 @@ const SortPopup = memo(() => {
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
                 key={name}
-                onClick={() => {
-                  setActiveItem(index);
-                  setVisiblePopup(false);
-                }}
+                onClick={() => onActiveItem(index)}
                 className={activeItem === index ? 'active' : ''}
               >
                 {name}
               </li>
             ))}
-            {/* <li className="active">популярности</li> */}
-            {/* <li>цене</li> */}
-            {/* <li>алфавиту</li> */}
           </ul>
         </div>
       )}

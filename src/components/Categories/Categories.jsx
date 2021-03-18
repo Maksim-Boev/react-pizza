@@ -3,23 +3,27 @@ import { useDispatch } from 'react-redux';
 import { setCategory } from '../../redux/actions/filters';
 
 import CategoriesItem from '../CategoriesItem';
+import { setLoaded } from '../../redux/actions/pizzas';
 
-const Categories = memo(() => {
-  const [activeItem, setActiveItem] = useState(null);
+const Categories = memo(({ activeCategory }) => {
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const listCategories = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCategory(activeItem));
-  }, [activeItem]);
+    if (!isFirstRender) {
+      dispatch(setLoaded());
+    }
+    setIsFirstRender(false);
+  }, [activeCategory]);
 
   return (
     <div className="categories">
       <ul>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
         <li
-          className={activeItem === null ? 'active' : ''}
-          onClick={() => setActiveItem(null)}
+          className={activeCategory === null ? 'active' : ''}
+          onClick={() => dispatch(setCategory(null))}
         >
           Все
         </li>
@@ -28,8 +32,8 @@ const Categories = memo(() => {
             <CategoriesItem
               key={index.toString()}
               category={category}
-              onSelectItem={index === activeItem ? 'active' : ''}
-              onClickItem={() => setActiveItem(index)}
+              onSelectItem={index === activeCategory ? 'active' : ''}
+              onClickItem={() => dispatch(setCategory(index))}
             />
           );
         })}
