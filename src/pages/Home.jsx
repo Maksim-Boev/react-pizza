@@ -37,7 +37,7 @@ const Home = () => {
               <PizzaItem
                 onClickAddPizza={handleAddPizzaToCart}
                 key={index.toString()}
-                allPizzaItem={cart[pizza.id] && cart[pizza.id].length}
+                allPizzaItem={cart[pizza.id] && cart[pizza.id].addedPizza.length}
                 data={pizza}
               />
             ))

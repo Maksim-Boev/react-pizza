@@ -2,11 +2,7 @@ import React from 'react';
 
 const ButtonCart = ({ totalPrice, total }) => {
   return (
-    <button
-      type="button"
-      onClick={() => console.log('Click the cart')}
-      className="button button--cart"
-    >
+    <button type="button" className="button button--cart">
       <span>{totalPrice} ₽</span>
       <div className="button__delimiter" />
       <svg

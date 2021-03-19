@@ -9,7 +9,7 @@ export const setPizzas = (items) => ({ type: 'SET_PIZZAS', payload: items });
 export const fetchPizzas = (category, sort) => (dispatch) => {
   axios
     .get(
-      `http://localhost:3004/pizzas${category !== null ? `?category=${category}` : '?'}` +
+      `/pizzas${category !== null ? `?category=${category}` : '?'}` +
         `${
           sort === 'rating'
             ? '&_sort=rating&_order=asc'
