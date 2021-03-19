@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import logo from '../../assets/img/pizza-logo.svg';
 import ButtonCart from '../ButtonCart';
 
 const Header = () => {
+  const { totalPrice, total } = useSelector(({ cart }) => ({
+    totalPrice: cart.totalPrice,
+    total: cart.total,
+  }));
   return (
     <div className="header">
       <div className="container">
@@ -19,7 +24,7 @@ const Header = () => {
         <div className="header__cart">
           <Route exact path="/">
             <Link to="/cart">
-              <ButtonCart />
+              <ButtonCart totalPrice={totalPrice} total={total} />
             </Link>
           </Route>
         </div>

@@ -5,12 +5,13 @@ import Categories from '../components/Categories';
 import SortPopup from '../components/SortPopup';
 import PizzaItem from '../components/PizzaItem';
 import { fetchPizzas } from '../redux/actions/pizzas';
+import { addPizzaToCart } from '../redux/actions/cart';
 import Loader from '../components/Loader';
 
 const Home = () => {
-  const pizzas = useSelector((state) => state.pizzas.items);
-  const isLoaded = useSelector((state) => state.pizzas.isLoaded);
-  const { category, sortBy } = useSelector((state) => state.filters);
+  const { isLoaded, items } = useSelector(({ pizzas }) => pizzas);
+  const { category, sortBy } = useSelector(({ filters }) => filters);
+  const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +19,10 @@ const Home = () => {
       dispatch(fetchPizzas(category, sortBy));
     }
   }, [isLoaded]);
+
+  const handleAddPizzaToCart = (obj) => {
+    dispatch(addPizzaToCart(obj));
+  };
 
   return (
     <div className="container">
@@ -28,8 +33,13 @@ const Home = () => {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoaded
-          ? pizzas.map((pizza, index) => (
-              <PizzaItem key={index.toString()} data={pizza} />
+          ? items.map((pizza, index) => (
+              <PizzaItem
+                onClickAddPizza={handleAddPizzaToCart}
+                key={index.toString()}
+                allPizzaItem={cart[pizza.id] && cart[pizza.id].length}
+                data={pizza}
+              />
             ))
           : Array.from({ length: 6 }, (v, k) => <Loader key={k.toString()} />)}
       </div>

@@ -1,15 +1,13 @@
 import React from 'react';
 
-const ButtonCart = () => {
-  const orderPrice = 8;
-  const orders = 5;
+const ButtonCart = ({ totalPrice, total }) => {
   return (
     <button
       type="button"
       onClick={() => console.log('Click the cart')}
       className="button button--cart"
     >
-      <span>{orderPrice} ₽</span>
+      <span>{totalPrice} ₽</span>
       <div className="button__delimiter" />
       <svg
         width="18"
@@ -40,7 +38,7 @@ const ButtonCart = () => {
           strokeLinejoin="round"
         />
       </svg>
-      <span>{orders}</span>
+      <span>{total}</span>
     </button>
   );
 };
