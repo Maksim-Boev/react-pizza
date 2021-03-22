@@ -1,23 +1,30 @@
 import React from 'react';
 
-const CartItem = ({ name, size, type, totalPrice, total }) => {
+const CartItem = ({ data, totalPrice, total, onRemovePizza, onMinus, onPlus }) => {
+  const { name, sizes, type, imageUrl, id, price } = data;
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
         <h3>{name}</h3>
         <p>
-          {type} тесто, {size} см.
+          {type} тесто, {sizes} см.
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <button
+          type="button"
+          onClick={() => {
+            onMinus({
+              id,
+              price,
+            });
+          }}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <svg
             width="10"
             height="10"
@@ -34,9 +41,18 @@ const CartItem = ({ name, size, type, totalPrice, total }) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{total}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <button
+          type="button"
+          onClick={() => {
+            onPlus({
+              id,
+              price,
+            });
+          }}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <svg
             width="10"
             height="10"
@@ -53,13 +69,19 @@ const CartItem = ({ name, size, type, totalPrice, total }) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{totalPrice} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <button
+          type="button"
+          onClick={() => {
+            onRemovePizza(id);
+          }}
+          className="button button--outline button--circle"
+        >
           <svg
             width="10"
             height="10"
@@ -76,7 +98,7 @@ const CartItem = ({ name, size, type, totalPrice, total }) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
     </div>
   );

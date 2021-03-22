@@ -1,7 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
-import { clearCart } from '../redux/actions/cart';
+import {
+  clearCart,
+  removeCartItem,
+  plusCartItem,
+  minusCartItem,
+} from '../redux/actions/cart';
+import CartEmptyPng from '../assets/img/empty-cart.png';
 
 const Cart = () => {
   const { total, totalPrice, items } = useSelector(({ cart }) => cart);
@@ -10,6 +17,19 @@ const Cart = () => {
   const onClearCart = () => {
     if (window.confirm('Вы действительно хотите очистить Корзину?'))
       dispatch(clearCart());
+  };
+
+  const onRemoveItem = (id) => {
+    if (window.confirm('Вы действительно хотите очистить Корзину?'))
+      dispatch(removeCartItem(id));
+  };
+
+  const onPlusCartIten = (id) => {
+    dispatch(plusCartItem(id));
+  };
+
+  const onMinusCartIten = (id) => {
+    dispatch(minusCartItem(id));
   };
 
   const groupPizza = Object.keys(items).map((key) => {
@@ -99,15 +119,16 @@ const Cart = () => {
               </div>
             </div>
             <div className="content__items">
-              {groupPizza.map(({ name, type, sizes, id }) => {
+              {groupPizza.map((addedPizza) => {
                 return (
                   <CartItem
-                    key={name}
-                    name={name}
-                    type={type}
-                    size={sizes}
-                    totalPrice={items[id].totalPriceAdded}
-                    total={items[id].addedPizza.length}
+                    key={addedPizza.name}
+                    data={addedPizza}
+                    onRemovePizza={onRemoveItem}
+                    onMinus={onMinusCartIten}
+                    onPlus={onPlusCartIten}
+                    totalPrice={items[addedPizza.id].totalPriceAdded}
+                    total={items[addedPizza.id].addedPizza.length}
                   />
                 );
               })}
@@ -122,7 +143,7 @@ const Cart = () => {
                 </span>
               </div>
               <div className="cart__bottom-buttons">
-                <a href="/" className="button button--outline button--add go-back-btn">
+                <Link to="/" className="button button--outline button--add go-back-btn">
                   <svg
                     width="8"
                     height="14"
@@ -140,7 +161,7 @@ const Cart = () => {
                   </svg>
 
                   <span>Вернуться назад</span>
-                </a>
+                </Link>
                 <div className="button pay-btn">
                   <span>Оплатить сейчас</span>
                 </div>
@@ -157,10 +178,10 @@ const Cart = () => {
               <br />
               Для того, чтобы заказать пиццу, перейди на главную страницу.
             </p>
-            <img src="../assets/img/empty-cart.png" alt="Empty cart" />
-            <a href="/" className="button button--black">
+            <img src={CartEmptyPng} alt="Empty cart" />
+            <Link to="/" className="button button--black">
               <span>Вернуться назад</span>
-            </a>
+            </Link>
           </div>
         )}
       </div>
