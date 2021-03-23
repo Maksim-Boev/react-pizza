@@ -5,7 +5,8 @@
     display: flex;
     flex-wrap: wrap;
 
-    li {
+    button, li {
+      border: none;
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;

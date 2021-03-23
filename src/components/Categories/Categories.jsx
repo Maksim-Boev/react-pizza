@@ -20,13 +20,13 @@ const Categories = memo(({ activeCategory }) => {
   return (
     <div className="categories">
       <ul>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
-        <li
+        <button
+          type="button"
           className={activeCategory === null ? 'active' : ''}
           onClick={() => dispatch(setCategory(null))}
         >
           Все
-        </li>
+        </button>
         {listCategories.map((category, index) => {
           return (
             <CategoriesItem

@@ -9,12 +9,10 @@ const getTotalPrice = (arr) =>
     return accumulator + currentValue.price;
   }, 0);
 
-const allPizzas = (state) => {
-  const addedPizza = Object.values(state).map((obj) => obj.addedPizza);
-  // eslint-disable-next-line prefer-spread
-  const pizzas = [].concat.apply([], addedPizza);
-  return pizzas;
-};
+const allPizzas = (state) =>
+  Object.values(state)
+    .map((obj) => obj.addedPizza)
+    .flat();
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
