@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import logo from '../../assets/img/pizza-logo.svg';
 import ButtonCart from '../ButtonCart';
 
-const Header = () => {
+const Header = memo(() => {
   const { totalPrice, total } = useSelector(({ cart }) => ({
     totalPrice: cart.totalPrice,
     total: cart.total,
@@ -31,6 +31,6 @@ const Header = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Header;

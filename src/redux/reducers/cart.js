@@ -9,6 +9,13 @@ const getTotalPrice = (arr) =>
     return accumulator + currentValue.price;
   }, 0);
 
+const allPizzas = (state) => {
+  const addedPizza = Object.values(state).map((obj) => obj.addedPizza);
+  // eslint-disable-next-line prefer-spread
+  const pizzas = [].concat.apply([], addedPizza);
+  return pizzas;
+};
+
 const cart = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PIZZA_TO_CART': {
@@ -22,16 +29,12 @@ const cart = (state = initialState, action) => {
           totalPriceAdded: getTotalPrice(currentPizzaItems),
         },
       };
-      const addedPizza = Object.values(newItems).map((obj) => obj.addedPizza);
-
-      // eslint-disable-next-line prefer-spread
-      const allPizzas = [].concat.apply([], addedPizza);
 
       return {
         ...state,
         items: newItems,
-        total: allPizzas.length,
-        totalPrice: getTotalPrice(allPizzas),
+        total: allPizzas(newItems).length,
+        totalPrice: getTotalPrice(allPizzas(newItems)),
       };
     }
     case 'CLEAR_CART':
@@ -42,14 +45,14 @@ const cart = (state = initialState, action) => {
       };
     case 'REMOVE_CART_ITEM': {
       const newAddedItems = { ...state.items };
-      const currentTotalPrice = newAddedItems[action.payload].totalPriceAdded;
-      const currentTotal = newAddedItems[action.payload].addedPizza.length;
+      const currentTotalPriceAdded = newAddedItems[action.payload].totalPriceAdded;
+      const currentTotalAdded = newAddedItems[action.payload].addedPizza.length;
       delete newAddedItems[action.payload];
       return {
         ...state,
         items: newAddedItems,
-        totalPrice: state.totalPrice - currentTotalPrice,
-        total: state.total - currentTotal,
+        totalPrice: state.totalPrice - currentTotalPriceAdded,
+        total: state.total - currentTotalAdded,
       };
     }
     case 'PLUS_CART_ITEM': {
@@ -57,22 +60,6 @@ const cart = (state = initialState, action) => {
         ...state.items[action.payload.id].addedPizza,
         state.items[action.payload.id].addedPizza[0],
       ];
-
-      const stateItems = Object.values({ ...state.items });
-
-      const currentTotalPrice = stateItems
-        .map(({ totalPriceAdded }) => totalPriceAdded)
-        .reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
-
-      const currentTotal = stateItems
-        .map(({ addedPizza }) => {
-          return addedPizza.length;
-        })
-        .reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
 
       return {
         ...state,
@@ -83,8 +70,8 @@ const cart = (state = initialState, action) => {
             totalPriceAdded: getTotalPrice(newItems),
           },
         },
-        totalPrice: currentTotalPrice + action.payload.price,
-        total: currentTotal + 1,
+        total: allPizzas({ ...state.items }).length + 1,
+        totalPrice: getTotalPrice(allPizzas({ ...state.items })) + action.payload.price,
       };
     }
     case 'MINUS_CART_ITEM': {
@@ -94,21 +81,6 @@ const cart = (state = initialState, action) => {
           ? [...state.items[action.payload.id].addedPizza.slice(1)]
           : oldItems;
 
-      const stateItems = Object.values({ ...state.items });
-
-      const currentTotal = stateItems
-        .map(({ addedPizza }) => {
-          return addedPizza.length;
-        })
-        .reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
-
-      const currentTotalPrice = stateItems
-        .map(({ totalPriceAdded }) => totalPriceAdded)
-        .reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
       return {
         ...state,
         items: {
@@ -120,9 +92,12 @@ const cart = (state = initialState, action) => {
         },
         totalPrice:
           oldItems.length > 1
-            ? currentTotalPrice - action.payload.price
-            : currentTotalPrice,
-        total: oldItems.length > 1 ? currentTotal - 1 : currentTotal,
+            ? getTotalPrice(allPizzas({ ...state.items })) - action.payload.price
+            : getTotalPrice(allPizzas({ ...state.items })),
+        total:
+          oldItems.length > 1
+            ? allPizzas({ ...state.items }).length - 1
+            : allPizzas({ ...state.items }).length,
       };
     }
     default:

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
@@ -10,7 +10,7 @@ import {
 } from '../redux/actions/cart';
 import CartEmptyPng from '../assets/img/empty-cart.png';
 
-const Cart = () => {
+const Cart = memo(() => {
   const { total, totalPrice, items } = useSelector(({ cart }) => cart);
   const dispatch = useDispatch();
 
@@ -24,17 +24,25 @@ const Cart = () => {
       dispatch(removeCartItem(id));
   };
 
-  const onPlusCartIten = (id) => {
+  const onPlusCartItem = (id) => {
     dispatch(plusCartItem(id));
   };
 
-  const onMinusCartIten = (id) => {
+  const onMinusCartItem = (id) => {
     dispatch(minusCartItem(id));
   };
 
   const groupPizza = Object.keys(items).map((key) => {
     return items[key].addedPizza[0];
   });
+
+  const onClickOrder = () => {
+    alert(
+      `Ваш заказ: (${groupPizza.map(
+        (p) => `${p.name} - ${items[p.id].addedPizza.length}шт`
+      )}) в обработке. Вам перезвонят.`
+    );
+  };
 
   return (
     <div className="content">
@@ -125,8 +133,8 @@ const Cart = () => {
                     key={addedPizza.name}
                     data={addedPizza}
                     onRemovePizza={onRemoveItem}
-                    onMinus={onMinusCartIten}
-                    onPlus={onPlusCartIten}
+                    onMinus={onMinusCartItem}
+                    onPlus={onPlusCartItem}
                     totalPrice={items[addedPizza.id].totalPriceAdded}
                     total={items[addedPizza.id].addedPizza.length}
                   />
@@ -162,16 +170,16 @@ const Cart = () => {
 
                   <span>Вернуться назад</span>
                 </Link>
-                <div className="button pay-btn">
-                  <span>Оплатить сейчас</span>
-                </div>
+                <button type="button" onClick={onClickOrder} className="button pay-btn">
+                  <span>Заказать</span>
+                </button>
               </div>
             </div>
           </div>
         ) : (
           <div className="cart cart--empty">
             <h2>
-              Корзина пустая <icon>😕</icon>
+              Корзина пустая <i>😕</i>
             </h2>
             <p>
               Вероятней всего, вы не заказывали ещё пиццу.
@@ -187,6 +195,6 @@ const Cart = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Cart;

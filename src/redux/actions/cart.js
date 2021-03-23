@@ -19,7 +19,7 @@ export const plusCartItem = (obj) => {
   };
 };
 
-export const minusCartItem = (id) => ({
+export const minusCartItem = (obj) => ({
   type: 'MINUS_CART_ITEM',
-  payload: id,
+  payload: obj,
 });

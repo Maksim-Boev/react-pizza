@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const CartItem = ({ data, totalPrice, total, onRemovePizza, onMinus, onPlus }) => {
+const CartItem = memo(({ data, totalPrice, total, onRemovePizza, onMinus, onPlus }) => {
   const { name, sizes, type, imageUrl, id, price } = data;
 
   return (
@@ -102,6 +102,6 @@ const CartItem = ({ data, totalPrice, total, onRemovePizza, onMinus, onPlus }) =
       </div>
     </div>
   );
-};
+});
 
 export default CartItem;
