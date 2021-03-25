@@ -11,7 +11,7 @@ import Loader from '../components/Loader';
 const Home = () => {
   const { isLoaded, items } = useSelector(({ pizzas }) => pizzas);
   const { category, sortBy } = useSelector(({ filters }) => filters);
-  const cart = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +37,9 @@ const Home = () => {
               <PizzaItem
                 onClickAddPizza={handleAddPizzaToCart}
                 key={index.toString()}
-                allPizzaItem={cart[pizza.id] && cart[pizza.id].addedPizza.length}
+                allPizzaItem={
+                  cartItems[pizza.id] && cartItems[pizza.id].addedPizza.length
+                }
                 data={pizza}
               />
             ))
