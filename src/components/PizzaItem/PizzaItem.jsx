@@ -30,7 +30,8 @@ const PizzaItem = ({ data, onClickAddPizza, allPizzaItem }) => {
           {availableType.map((itemType, index) => {
             return (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-              <li
+              <button
+                type="button"
                 key={itemType}
                 onClick={() => {
                   setDoughType(index);
@@ -41,7 +42,7 @@ const PizzaItem = ({ data, onClickAddPizza, allPizzaItem }) => {
                 }
               >
                 {itemType}
-              </li>
+              </button>
             );
           })}
         </ul>

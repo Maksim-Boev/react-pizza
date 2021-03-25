@@ -35,7 +35,8 @@
         margin-bottom: 6px;
       }
 
-      li {
+      li, button {
+        border: none;
         padding: 8px;
         flex: 1;
         cursor: pointer;
