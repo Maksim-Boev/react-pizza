@@ -7,9 +7,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
-    "concurrently": "^6.0.1",
     "json-server": "^0.16.3",
     "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-content-loader": "^6.0.2",
@@ -26,8 +26,7 @@
     "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch public/db.json --port 3004",
-    "dev": "concurrently \"yarn server\" \"yarn build\""
+    "server": "json-server --watch public/db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [
